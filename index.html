@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Youtube</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet"> 
+  <link rel="stylesheet" href="styles/general.css">
+  <link rel="stylesheet" href="styles/grid.css">
+  <link rel="stylesheet" href="styles/header.css">
+  <link rel="stylesheet" href="styless/sidebar.css">
+    <style>
+      p {
+        font-family: Roboto, Arial;
+        margin-top: 0px;
+        margin-bottom: 0px;
+      }
+       .img {
+        width: 100%;
+       }
+
+       .searchbar {
+        display: block;
+        font-size: 13px;
+        border-radius: 4px;
+       }
+
+       .video-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        column-gap: 25px;
+        row-gap: 20px;
+       }
+
+       @media (max-width: 755px) {
+        .video-grid {
+        grid-template-columns:  1fr 1fr;
+        }
+       }
+
+       @media (min-width: 756px) and (max-width:999px) {
+       .video-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+       }
+       } 
+
+       @media (min-width: 1000px) {
+        .video-grid {
+          grid-template-columns: 1fr 1fr 1fr 1fr;
+        }
+       }
+
+       .thumbnail-image {
+        margin-bottom: 8px;
+        position: relative;
+       }
+
+       .video-time {
+        position: absolute;
+        bottom: 10px;
+        right: 5px;
+        background-color: black;
+        color: white;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-size: 13px;
+        padding: 4px;
+        border-radius: 2px;
+        font-weight: 500;
+       }
+
+       .video-title {
+        margin-top: 0px;
+        font-weight:500;
+        line-height: 20px;
+        margin-bottom: 13px;
+        font-size: small;
+       }
+
+      .video-info-grid {
+        display: grid;
+        grid-template-columns: 50px 1fr;
+      }
+       
+       .channel-picture {
+        margin-right: 5px;
+        
+       }
+ 
+       .video-author, 
+       .video-stats {
+        font-size: 12px;
+        color: rgb (96, 96, 96);
+       }
+
+       .video-author {
+        margin-bottom: 4px;
+       }
+       .profile-picture {
+        width: 36px;
+        border-radius: 30px;
+        
+       }
+
+       .header {
+        display: flex;
+        cursor: pointer;
+        flex-direction: row;
+        justify-content: space-between;
+        height: 55px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background-color: white;
+        border-bottom: 1px;
+        border-style: solid;
+        border-color: rgb(240, 240, 240);
+        z-index: 100;
+       }
+
+       .left-section {
+        display: flex;
+        align-items: center;
+       }
+
+       .hamburger-menu {
+        height: 24px;
+        display: flex;
+        margin-left: 24px;
+        margin-right: 24px;
+       }
+
+       .youtube-logo {
+        height: 20px;
+        display: flex;
+       }
+       .middle-section {
+        display: flex;
+        flex: 1;
+        max-width: 500px;
+        margin-left: 40px;
+        align-items: center;
+       }
+
+       .searchbar {
+        flex:1;
+        height: 34px;
+        padding-left: 9px;
+        border-width: 1px;
+        border-color: rgb(192, 192, 192);
+        border-style: solid;
+        border-radius: 1px;
+        box-shadow: inset 1px 2px 3px rgba(0, 0, 0, 0.05);
+        width: 0;
+       }
+
+       .searchbar::placeholder {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-size: 14px;
+       }
+
+       .search-button {
+        height: 37.60px;
+        width: 66px;
+        background-color:  rgb(240, 240,240);
+        border-width: 1px;
+        border-style: solid;
+        border-color: rgb(192, 192, 192);
+        margin-left: -5px;
+        margin-right: 8px;
+       }
+
+       .search-button,
+       .voice-search-button,
+       .upload-icon-container,
+       .youtube-apps-icon-container,
+       .notifications-icon-container,
+       .user-icon-container {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+       }
+
+       .search-button .tooltip,
+       .voice-search-button .tooltip,
+       .upload-icon-container .tooltip,
+       .youtube-apps-icon-container .tooltip,
+       .notifications-icon-container .tooltip,
+       .user-icon-container .tooltip {
+        position: absolute;
+        background-color: gray;
+        color: white;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        padding-left: 8px;
+        padding-right: 8px;
+        border-radius: 2px;
+        font-size: 12px;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        bottom: -28px;
+        opacity: 0;
+        transition: opacity 0.25s;
+        pointer-events: none;
+        white-space: nowrap;
+       }
+
+        .search-button:hover .tooltip,
+        .voice-search-button:hover .tooltip,
+        .upload-icon-container:hover .tooltip,
+        .youtube-apps-icon-container:hover .tooltip,
+        .notifications-icon-container:hover .tooltip,
+        .user-icon-container:hover .tooltip 
+        {
+          opacity: 100;
+        }
+       .search-icon {
+        height: 24px;
+       }
+
+       .voice-search-button {
+        height: 40px;
+        width: 40px;
+        border-radius: 20px;
+        border: none;
+        background-color: rgb(245, 245,245);
+
+       }
+
+       .voice-search-icon {
+        height: 24px;
+       }
+
+       .right-section {
+        width: 180px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-right: 20px;
+        flex-shrink: 0;
+        margin-left: 30px;
+       }
+
+       .notifications-icon-container {
+        position: relative;
+       }
+
+       .notifications-count {
+        position: absolute;
+        background-color: rgb(221, 3, 3);
+        color: white;
+        border-radius: 10px;
+        font-size: 10px;
+        padding-left: 5px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        padding-right: 5px;
+        top: -7px;
+        right: -5px;
+        font-weight: 500;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+       }
+
+        .sidebar {
+        position: fixed;
+        cursor: pointer;
+        padding-top: 10px;
+        left: 0;
+        bottom: 0;
+        top: 57px;
+        z-index: 200;
+        width: 72px;
+        background-color: white;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      }
+
+      .sidebar-link {
+        display: flex;
+        height: 75px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 10px;
+      }
+
+      .sidebar-link:hover {
+        background-color: rgb(213, 213, 213);
+      }
+
+      .sidebar img {
+        height: 25px;
+        margin-bottom: 4px;
+      }
+
+      .upload-icon {
+        height: 24px;
+      }
+
+      .youtube-apps-icon {
+        height: 24px;
+      }
+
+      .notifications-icon {
+        height: 24px;
+      }
+
+      .user-icon {
+        height: 34px;
+        border-radius: 16px;
+      }
+
+    </style>
+  </head>
+  <body style="
+  padding-top: 70px;
+  padding-left: 95px;
+  padding-right: 25px;
+  background-color: rgb(248, 248, 248);
+  margin-bottom: 30px;"
+  >
+    <header class="header">
+      <div class="left-section">
+        <img class="hamburger-menu" src="icons/hamburger-menu.svg" alt="">
+        <img class="youtube-logo" src="icons/youtube-logo.svg">
+      </div>
+      <div class="middle-section">
+          <input class="searchbar" type="text" placeholder="search"> 
+          <button class="search-button">
+            <img class="search-icon" src="icons/search.svg" alt="">
+            <div class="tooltip">Search</div>
+          </button>
+          <button class="voice-search-button">
+            <img class="voice-search-icon" src="icons/voice-search-icon.svg">
+            <div class="tooltip">Search using your voice</div>
+          </button>
+      </div>
+      <div class="right-section">
+        <div class="upload-icon-container">
+          <img class="upload-icon" src="icons/upload.svg" alt="">
+          <div class="tooltip"> Upload</div>
+        </div>
+        <div class="youtube-apps-icon-container">
+          <img class="youtube-apps-icon" src="icons/youtube-apps.svg" alt="">
+          <div class="tooltip"> Icons</div>
+        </div>
+        
+        <div class="notifications-icon-container">
+          <img class="notifications-icon" src="icons/notifications.svg" alt="">
+          <div class="tooltip"> Notifications</div>
+          <div class="notifications-count">7</div>
+        </div>    
+        <div class="user-icon-container"> 
+          <img class="user-icon" src="channel pictures/channel-1.jpeg" alt="">
+          <di class="tooltip"> My Profile</div>
+        </div>   
+        
+      </div>
+    </header>
+
+    <nav class="sidebar">
+      <div class="sidebar-link"> 
+        <img src="icons/home.svg">
+        <div>Home</div>
+      </div>
+      <div class="sidebar-link"> 
+        <img src="icons/subscriptions.svg">
+        <div>Icons</div>
+      </div>
+      <div class="sidebar-link"> 
+        <img src="icons/explore.svg">
+        <div>Explore</div>
+      </div>
+      <div class="sidebar-link"> 
+        <img src="icons/originals.svg">
+        <div>Originals</div>
+      </div>
+      <div class="sidebar-link"> 
+        <img src="icons/library.svg">
+        <div> Library</div>
+      </div>
+    </nav>
+
+    <main>
+      <section class="video-grid">
+        <div class="video-preview">
+          <div class="thumbnail-image">
+          <img class="img" src="thumbnails/EF025989-18E5-47A4-A0A3-556BBF24BAC7_4_5005_c.jpeg" alt="">
+          <div class="video-time">
+            19:21
+          </div>
+        </div>
+          <div class="video-info-grid">
+            <div class="channel-picture">
+              <img class="profile-picture" src="channel pictures/channel-1.jpeg">
+            </div>
+            <div class="video-info">
+              <p class="video-title"> 
+                Welcome to the new launch eveny by Google</p>
+              <p class="video-author">
+                Abhinav Naragani
+              </p>  
+              <p class="video-stats"> 
+                3.9 million views . 6 months ago
+              </p>
+            </div> 
+          </div>  
+          </div>
+  
+          <div class="video-preview">
+            <div class="thumbnail-image">
+            <img class="img" src="thumbnails/064A42E7-5410-408A-924F-3A8171DE2D5E_4_5005_c.jpeg" alt="">
+            <div class="video-time">
+              9:21
+            </div>
+            </div>
+            <div class="video-info-grid">
+              <div class="channel-picture">
+                <img class="profile-picture" src="channel pictures/channel-1.jpeg">
+              </div>
+              <div class="video-info">
+                <p class="video-title"> 
+                  How to develop a website page in under 10 hours for a beginner</p>
+                <p class="video-author">
+                  Esha Gangam  
+                </p>  
+                <p class="video-stats"> 
+                  9 million views . 16 months ago
+                </p>
+              </div> 
+            </div>  
+            </div>
+  
+            <div class="video-preview">
+              <div class="thumbnail-image">
+              <img class="img" src="thumbnails/5424A1F1-A7EE-4BAC-8098-5772AE29EBDA_4_5005_c.jpeg" alt="">
+              <div class="video-time">
+                10:21
+              </div>
+              </div>
+              <div class="video-info-grid">
+                <div class="channel-picture">
+                  <img class="profile-picture" src="channel pictures/channel-1.jpeg">
+                </div>
+                <div class="video-info">
+                  <p class="video-title"> 
+                    How to solve math </p>
+                  <p class="video-author">
+                    Richa Bhavanai  
+                  </p>  
+                  <p class="video-stats"> 
+                    1 million views . 1 months ago
+                  </p>
+                </div> 
+              </div>  
+              </div>
+  
+              <div class="video-preview">
+                <div class="thumbnail-image">
+                <img class="img" src="thumbnails/D3F3AB9A-FA22-4766-8E5A-A837E0942729_4_5005_c.jpeg" alt="">
+                <div class="video-time">
+                  1:21
+                </div>
+                </div>
+                <div class="video-info-grid">
+                  <div class="channel-picture">
+                    <img class="profile-picture" src="channel pictures/channel-1.jpeg">
+                  </div>
+                  <div class="video-info">
+                    <p class="video-title"> 
+                      How long does it take to hike Mount Everest
+                    <p class="video-author">
+                      Travel Diaries  
+                    </p>  
+                    <p class="video-stats"> 
+                      100 million views . 4 months ago
+                    </p>
+                  </div> 
+                </div>  
+                </div>
+  
+                <div class="video-preview">
+                  <div class="thumbnail-image">
+                  <img class="img" src="thumbnails/DC87736F-BF06-4397-8EBE-C86B7A46E9F2_4_5005_c.jpeg" alt="">
+                  <div class="video-time">
+                    05:01
+                  </div>
+                  </div>
+                  <div class="video-info-grid">
+                    <div class="channel-picture">
+                      <img class="profile-picture" src="channel pictures/channel-1.jpeg">
+                    </div>
+                    <div class="video-info">
+                      <p class="video-title"> 
+                        How I Met Your Mother</p>
+                      <p class="video-author">
+                        Movie Nights  
+                      </p>  
+                      <p class="video-stats"> 
+                       99 million views . 1 year ago
+                      </p>
+                    </div> 
+                  </div>  
+                  </div>
+  
+                  <div class="video-preview">
+                    <div class="thumbnail-image">
+                    <img class="img" src="thumbnails/E022F8A6-3DFF-441C-B3F3-479118618655_4_5005_c.jpeg" alt="">
+                    <div class="video-time">
+                      30:00
+                    </div>
+                    </div>
+                    <div class="video-info-grid">
+                      <div class="channel-picture">
+                        <img class="profile-picture" src="channel pictures/channel-1.jpeg">
+                      </div>
+                      <div class="video-info">
+                        <p class="video-title"> 
+                          How to cook Biryani???</p>
+                        <p class="video-author">
+                          Dinesh Cooking Vlogs  
+                        </p>  
+                        <p class="video-stats"> 
+                          100 views . 10 years ago
+                        </p>
+                      </div> 
+                    </div>  
+                    </div>
+  
+                    <div class="video-preview">
+                      <div class="thumbnail-image">
+                      <img class="img" src="thumbnails/220FA2EB-1B5E-4ED3-B054-BD003978758E_4_5005_c.jpeg" alt="">
+                      <div class="video-time">
+                        1:30
+                      </div>
+                      </div>
+                      <div class="video-info-grid">
+                        <div class="channel-picture">
+                          <img class="profile-picture" src="channel pictures/channel-1.jpeg">
+                        </div>
+                        <div class="video-info">
+                          <p class="video-title"> 
+                            Welcome to my Gym Vlogs</p>
+                          <p class="video-author">
+                            Teja Yenduri Gym  
+                          </p>  
+                          <p class="video-stats"> 
+                          90 views . 1 day ago
+                          </p>
+                        </div> 
+                      </div>  
+                      </div>
+  
+            <div class="video-preview">
+              <div class="thumbnail-image">
+              <img class="img" src="thumbnails/033621D9-12BF-4223-AF0E-D4A92ED89416_4_5005_c.jpeg" alt="">
+              <div class="video-time">
+                07:22
+              </div>
+              </div>
+              <div class="video-info-grid">
+                <div class="channel-picture">
+                  <img class="profile-picture" src="channel pictures/channel-1.jpeg">
+                </div>
+                <div class="video-info">
+                  <p class="video-title"> 
+                    How to do a facial pack?</p>
+                  <p class="video-author">
+                    Akash's Spa at Home  
+                  </p>  
+                  <p class="video-stats"> 
+                    1 million views . 12 months ago
+                  </p>
+                </div> 
+              </div>  
+              </div>
+  
+              <div class="video-preview">
+                <div class="thumbnail-image">
+                <img class="img" src="thumbnails/ACE3F0F8-8E9B-454D-A853-6EDD4923B7FC_4_5005_c.jpeg" alt="">
+                <div class="video-time">
+                  1:36
+                </div>
+                </div>
+                <div class="video-info-grid">
+                  <div class="channel-picture">
+                    <img class="profile-picture" src="channel pictures/channel-1.jpeg">
+                  </div>
+                  <div class="video-info">
+                    <p class="video-title"> 
+                      What can we do to reduce stress eating?</p>
+                    <p class="video-author">
+                      Dinesh Nimmala  
+                    </p>  
+                    <p class="video-stats"> 
+                      10 million views . 3 months ago
+                    </p>
+                  </div> 
+                </div>  
+                </div>
+      </section>   
+    </main>
+  </body>
+</html>
